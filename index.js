@@ -1,8 +1,7 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-// import authRoutes from './routes/authRoutes.js';
-// import taskRoutes from './routes/taskRoutes.js';
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const userRouteHandler = require('./routeHandler/userRouteHandler'); // Adjusted for CommonJS
 
 dotenv.config();
 
@@ -12,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 // Routes
-// app.use('/auth', authRoutes);
+app.use('/auth', userRouteHandler);
 // app.use('/tasks', taskRoutes);
 
 // Database connection

@@ -1,10 +1,11 @@
-import jwt from "jsonwebtoken";
-import User from "../Schemas/User";
-import bcrypt from "bcryptjs/dist/bcrypt";
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const User = require("../Schemas/User");
+const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const router = express.Router();
 
-//sign up
+// Sign up
 router.post("/registration", async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -18,25 +19,21 @@ router.post("/registration", async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "user created succefully" });
+    res.status(201).json({ message: "User created successfully" });
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
 });
 
-//log in
-
+// Log in
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-
-    const user = await User.findOne({email})
-    if(!user){
-        res.status(400).json({Message: "User not found"})
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ Message: "User not found" });
     }
-
-
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
@@ -49,3 +46,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ msg: 'Server error' });
   }
 });
+
+module.exports = router;

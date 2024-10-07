@@ -1,17 +1,17 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const taskSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true,
+    required: true, 
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   status: {
     type: String,
-    requeire: true,
+    required: true, 
     enum: ["pending", "ongoing", "complete"],
     default: "pending",
   },
@@ -21,8 +21,8 @@ const taskSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now, // removed parentheses to use the function instead of calling it
   },
 });
 
-export default mongoose.model("Task", taskSchema);
+module.exports = mongoose.model("Task", taskSchema);
